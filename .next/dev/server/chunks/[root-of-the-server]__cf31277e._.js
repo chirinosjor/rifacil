@@ -78,36 +78,38 @@ __turbopack_context__.s([
     "POST",
     ()=>POST
 ]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/supabase/server.ts [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/next@16.0.3_react-dom@19.2.0_react@19.2.0__react@19.2.0/node_modules/next/server.js [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/supabase/server.ts [app-route] (ecmascript)");
 ;
 ;
-async function POST(request) {
+async function POST(req) {
     try {
-        const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["createServerSupabaseClient"])();
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) {
+        // Create Supabase client (reads cookies from request)
+        const supabase = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["createServerSupabaseClient"])();
+        // Check authenticated user
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        if (userError || !user) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: 'Unauthorized'
+                error: "Unauthorized"
             }, {
                 status: 401
             });
         }
-        const { name, total_numbers, ticket_price } = await request.json();
-        // Validate input
+        // Parse request body
+        const { name, total_numbers, ticket_price } = await req.json();
         if (!name || !total_numbers || !ticket_price) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: 'Missing required fields'
+                error: "Missing required fields"
             }, {
                 status: 400
             });
         }
         // Create game
-        const { data: game, error: gameError } = await supabase.from('games').insert({
+        const { data: game, error: gameError } = await supabase.from("games").insert({
             user_id: user.id,
             name,
-            total_numbers: parseInt(total_numbers),
-            ticket_price: parseFloat(ticket_price)
+            total_numbers: Number(total_numbers),
+            ticket_price: Number(ticket_price)
         }).select().single();
         if (gameError) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
@@ -116,15 +118,15 @@ async function POST(request) {
                 status: 400
             });
         }
-        // Create tickets (pre-populate all ticket numbers)
-        const ticketsToCreate = Array.from({
-            length: total_numbers
+        // Pre-create all tickets
+        const tickets = Array.from({
+            length: Number(total_numbers)
         }, (_, i)=>({
                 game_id: game.id,
                 ticket_number: i + 1,
                 is_paid: false
             }));
-        const { error: ticketsError } = await supabase.from('tickets').insert(ticketsToCreate);
+        const { error: ticketsError } = await supabase.from("tickets").insert(tickets);
         if (ticketsError) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
                 error: ticketsError.message
@@ -133,9 +135,10 @@ async function POST(request) {
             });
         }
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(game);
-    } catch (error) {
+    } catch (err) {
+        console.error("API Error:", err);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$0$2e$3_react$2d$dom$40$19$2e$2$2e$0_react$40$19$2e$2$2e$0_$5f$react$40$19$2e$2$2e$0$2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: 'Internal server error'
+            error: "Internal server error"
         }, {
             status: 500
         });

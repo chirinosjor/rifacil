@@ -1,56 +1,66 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface CreateGameModalProps {
-  onClose: () => void
-  onGameCreated: (game: any) => void
+  onClose: () => void;
+  onGameCreated: (game: any) => void;
 }
 
-export function CreateGameModal({ onClose, onGameCreated }: CreateGameModalProps) {
-  const [name, setName] = useState('')
-  const [totalNumbers, setTotalNumbers] = useState('')
-  const [ticketPrice, setTicketPrice] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+export function CreateGameModal({
+  onClose,
+  onGameCreated,
+}: CreateGameModalProps) {
+  const [name, setName] = useState("");
+  const [totalNumbers, setTotalNumbers] = useState("");
+  const [ticketPrice, setTicketPrice] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
 
     if (!name || !totalNumbers || !ticketPrice) {
-      setError('All fields are required')
-      setLoading(false)
-      return
+      setError("All fields are required");
+      setLoading(false);
+      return;
     }
 
     try {
-      const response = await fetch('/api/games', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/games", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // <-- THIS FIXES THE 401
         body: JSON.stringify({
           name,
           total_numbers: totalNumbers,
           ticket_price: ticketPrice,
         }),
-      })
+      });
 
       if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.error || 'Failed to create game')
+        const data = await response.json();
+        throw new Error(data.error || "Failed to create game");
       }
 
-      const game = await response.json()
-      onGameCreated(game)
+      const game = await response.json();
+      onGameCreated(game);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred')
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -62,7 +72,9 @@ export function CreateGameModal({ onClose, onGameCreated }: CreateGameModalProps
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Game Name</label>
+              <label className="text-sm font-medium text-foreground">
+                Game Name
+              </label>
               <input
                 type="text"
                 value={name}
@@ -73,7 +85,9 @@ export function CreateGameModal({ onClose, onGameCreated }: CreateGameModalProps
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Total Numbers</label>
+              <label className="text-sm font-medium text-foreground">
+                Total Numbers
+              </label>
               <input
                 type="number"
                 value={totalNumbers}
@@ -85,7 +99,9 @@ export function CreateGameModal({ onClose, onGameCreated }: CreateGameModalProps
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-foreground">Ticket Price</label>
+              <label className="text-sm font-medium text-foreground">
+                Ticket Price
+              </label>
               <input
                 type="number"
                 value={ticketPrice}
@@ -117,12 +133,12 @@ export function CreateGameModal({ onClose, onGameCreated }: CreateGameModalProps
                 disabled={loading}
                 className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
               >
-                {loading ? 'Creating...' : 'Create Game'}
+                {loading ? "Creating..." : "Create Game"}
               </Button>
             </div>
           </form>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
