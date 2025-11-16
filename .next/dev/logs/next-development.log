@@ -1,0 +1,43 @@
+[00:00:05.868] Server  WARN     ⚠ Minimum recommended TypeScript version is v5.1.0, older versions can potentially be incompatible with Next.js. Detected: 5.0.2
+[00:00:05.871] Server  LOG     
+[00:00:05.871] Server  LOG        We detected TypeScript in your project and reconfigured your tsconfig.json file for you.
+[00:00:05.871] Server  LOG        The following suggested values were added to your tsconfig.json. These values can be changed to fit your project's needs:
+
+[00:00:05.871] Server  LOG        	- include was updated to add '.next/dev/types/**/*.ts'
+[00:00:05.871] Server  LOG     
+[00:00:05.871] Server  LOG        The following mandatory changes were made to your tsconfig.json:
+
+[00:00:05.871] Server  LOG        	- jsx was set to react-jsx (next.js uses the React automatic runtime)
+[00:00:05.871] Server  LOG     
+[00:00:05.882] Server  WARN     ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:06.477] Server  LOG      ✓ Ready in 4.4s
+[00:00:06.551] Server  ERROR    ⨯ Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+[00:00:07.441] Browser ERROR   uncaughtError: Error: Your project's URL and Key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+[00:00:21.692] Server  LOG        Reload env: .env
+[00:00:22.071] Server  LOG      ✓ Compiled in 344ms
+[00:00:22.901] Server  WARN    Error: Route "/" used `cookies().getAll`. `cookies()` returns a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:00:22.924] Server  ERROR   TypeError: cookieStore.getAll is not a function
+[00:00:22.937] Server  ERROR    ⨯ TypeError: cookieStore.getAll is not a function
+[00:00:22.953] Server  ERROR   TypeError: cookieStore.getAll is not a function
+[00:00:22.968] Server  ERROR    ⨯ "unhandledRejection:" TypeError: cookieStore.getAll is not a function
+[00:00:22.976] Server  ERROR    ⨯ "unhandledRejection: " TypeError: cookieStore.getAll is not a function
+[00:00:22.985] Server  ERROR   TypeError: cookieStore.getAll is not a function
+[00:00:22.993] Server  ERROR    ⨯ "unhandledRejection:" TypeError: cookieStore.getAll is not a function
+[00:00:23.002] Server  ERROR    ⨯ "unhandledRejection: " TypeError: cookieStore.getAll is not a function
+[00:00:23.173] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:23.173] Browser ERROR   uncaughtError: TypeError: cookieStore.getAll is not a function
+[00:00:48.393] Server  ERROR    ⨯ TypeError: Cannot read properties of undefined (reading 'getUser')
+[00:00:48.543] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:48.543] Browser ERROR   uncaughtError: TypeError: Cannot read properties of undefined (reading 'getUser')
+[00:01:00.352] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:01:00.474] Browser LOG     %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit
+[00:01:00.474] Browser LOG     %c[Vercel Web Analytics]%c Running queued event color: rgb(120, 120, 120) color: inherit pageview {"path":"/dashboard","route":"/dashboard"}
+[00:01:00.474] Browser LOG     %c[Vercel Web Analytics]%c [pageview] http://localhost:3000/dashboard color: rgb(120, 120, 120) color: inherit {"dp":"/dashboard","o":"http://localhost:3000/dashboard","sdkn":"@vercel/analytics/next","sdkv":"1.5.0","sv":"0.1.3","ts":1763264482516}
